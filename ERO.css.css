@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+#route-planner {
+    flex: 1;
+    margin-right: 20px;
+}
+
+#charging-stations {
+    flex: 1;
+}
+
+#route-map {
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ddd;
+}
+
+#charging-station-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#charging-station-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#charging-station-list li:last-child {
+    border-bottom: none;
+}

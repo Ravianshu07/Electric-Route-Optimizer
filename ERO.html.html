@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Route Optimizer (ERO)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Electric Route Optimizer (ERO)</h1>
+    </header>
+    <main>
+        <section id="route-planner">
+            <h2>Route Planner</h2>
+            <form>
+                <label for="start-location">Start Location:</label>
+                <input type="text" id="start-location" placeholder="Enter start location">
+                <br>
+                <label for="end-location">End Location:</label>
+                <input type="text" id="end-location" placeholder="Enter end location">
+                <br>
+                <label for="vehicle-range">Vehicle Range (miles):</label>
+                <input type="number" id="vehicle-range" value="250">
+                <br>
+                <button id="plan-route">Plan Route</button>
+            </form>
+            <div id="route-map"></div>
+        </section>
+        <section id="charging-stations">
+            <h2>Charging Stations</h2>
+            <ul id="charging-station-list"></ul>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
