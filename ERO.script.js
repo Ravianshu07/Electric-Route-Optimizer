@@ -1,39 +1,70 @@
+const API_KEY = process.env.API_KEY;
+const CHARGING_STATIONS_API = 'https://api.chargingstations.com/v2/stations';
 
-const mapAPI = {
-    init: () => {
-   
-    },
-    getRoute: (start, end) => {
-        
-    },
-    getChargingStations: (location) => {
-    
-    }
-};
+async function getChargingStations(origin, destination) {
+  try {
+    const response = await fetch(`${CHARGING_STATIONS_API}?lat=${origin.lat}&lon=${origin.lon}&radius=10&api_key=${API_KEY}`);
+    const data = await response.json();
+    return data.stations;
+  } catch (error) {
+    console.error('Error fetching charging stations:', error);
+    return [];
+  }
+}
 
+async function optimizeRoute(origin, destination, chargingStations) {
+  try {
+    return optimizedRoute;
+  } catch (error) {
+    console.error('Error optimizing route:', error);
+    return null;
+  }
+}
 
-const routePlanner = {
-    planRoute: () => {
-        const startLocation = document.getElementById('start-location').value;
-        const endLocation = document.getElementById('end-location').value;
-        const vehicleRange = document.getElementById('vehicle-range').value;
+async function estimateEnergyConsumption(route) {
+  try {
+    return energyConsumption;
+  } catch (error) {
+    console.error('Error estimating energy consumption:', error);
+    return null;
+  }
+}
 
-        const routeData = mapAPI.getRoute(startLocation, endLocation);
+function visualizeRoute(route, mapElement) {
+  try {
 
-        if (routeData.distance <= vehicleRange) {
-            const routeMap = document.getElementById('route-map');
-            routeMap.innerHTML = '';
-            const chargingStations = mapAPI.getChargingStations(startLocation)
-            const chargingStationList = document.getElementById('charging-station-list');
-            chargingStationList.innerHTML = '';
-            chargingStations.forEach((station) => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${station.name} - ${station.distance} miles away`;
-                chargingStationList.appendChild(listItem);
-            });
-        } else {
-            alert('Route exceeds vehicle range!');
-        }
-    }
-};
-document.getElementById('plan-route').addEventListener('click', routePlanner.planRoute);
+  } catch (error) {
+    console.error('Error visualizing route:', error);
+  }
+}
+
+import { getChargingStations } from './api';
+import { optimizeRoute } from './route-optimizer';
+import { estimateEnergyConsumption } from './energy-estimator';
+import { visualizeRoute } from './map-visualizer';
+
+const optimizeRouteButton = document.getElementById('optimize-route');
+const originInput = document.getElementById('origin');
+const destinationInput = document.getElementById('destination');
+const mapElement = document.getElementById('map');
+const energyConsumptionElement = document.getElementById('energy-consumption');
+
+optimizeRouteButton.addEventListener('click', async () => {
+  const origin = originInput.value;
+  const destination = destinationInput.value;
+
+  if (!origin || !destination) {
+    alert('Please enter both origin and destination');
+    return;
+  }
+
+  try {
+    const chargingStations = await getChargingStations(origin, destination);
+    const optimizedRoute = await optimizeRoute(origin, destination, chargingStations);
+    const energyConsumption = await estimateEnergyConsumption(optimizedRoute);
+    visualizeRoute(optimizedRoute, mapElement);
+    energyConsumptionElement.textContent = `Energy Consumption: ${energyConsumption.toFixed(2)} kWh`;
+  } catch (error) {
+    console.error('Error optimizing route:', error);
+  }
+});
